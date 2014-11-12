@@ -22,19 +22,16 @@ class AdressList {
 
     private Address[] list = new Address[10];
     private int count = 0;
-
-    public static int Dobav(AdressList book, String n1, String n2, String n3, int n4) {
-        book.list[book.count] = new Address(n1, n2, n3, n4);
+    public static void Dobav(AdressList book, String Ima1, String Famil1, String Ph1, int God1) {
+        book.list[book.count] = new Address(Ima1, Famil1, Ph1, God1);
         book.count++;
-        return 0;
     }
 
-    public static int Izm(AdressList book, int nInd, String n1, String n2, String n3, int n4) {
-        book.list[nInd] = new Address(n1, n2, n3, n4);
-        return 0;
+    public static void Izm(AdressList book, int nInd, String Ima1, String Famil1, String Ph1, int God1) {
+        book.list[nInd] = new Address(Ima1, Famil1, Ph1, God1);
     }
 
-    public static int FindMan(AdressList book, String search) {
+    public static void FindMan(AdressList book, String search) {
         int x = 0;
         for (int i = 0; i < book.count; i++) {
             Address a = book.list[i];
@@ -46,10 +43,9 @@ class AdressList {
         if (x == 0) {
             System.out.println("Совпадений не Найдено");
         }
-        return 0;
     }
 
-    public static int Vuvod(AdressList book) {
+    public static void Vuvod(AdressList book) {
         if (book.count == 0) {
             System.out.println("В Адресной Кониге Нет Записей");
         } else {
@@ -57,31 +53,25 @@ class AdressList {
                 System.out.println(book.list[i].name + " " + book.list[i].fam + " " + book.list[i].phone + " " + book.list[i].year);
             }
         }
-        return 0;
     }
 
-    public static int VuvodVse(AdressList book) {
+    public static void VuvodVse(AdressList book) {
         if (book.count == 0) {
             System.out.println("В Адресной Кониге Нет Записей");
         } else {
             System.out.println("Количество Записей =" + book.count);
         }
-        return 0;
     }
 
-    public static int DeleteZap(AdressList book, int VvodDel) {
-            for (int i = VvodDel; i <= book.count - 2; i++) {
-                book.list[i] = book.list[i + 1];
-            }
-            book.count--;
-        return 0;
+    public static void DeleteZap(AdressList book, int VvodDel) {
+        for (int i = VvodDel; i <= book.count - 2; i++) {
+            book.list[i] = book.list[i + 1];
+        }
+        book.count--;
     }
 
-    public static int Check(AdressList book, int Chk){
-        if (Chk < 0 || Chk >= book.count) {
-            return 0;}
-        else {
-            return 1;}
+    public static boolean Check(AdressList book, int Chk) {
+        return !(Chk < 0 || Chk >= book.count);
     }
 }
 
@@ -107,15 +97,15 @@ public class AdressBook {
             {
                 case 1:
                     System.out.println("Введите Имя");
-                    String n1 = in.nextLine();
+                    String Ima1 = in.nextLine();
                     System.out.println("Введите Фамилию");
-                    String n2 = in.nextLine();
+                    String Famil1 = in.nextLine();
                     System.out.println("Введите Телефон");
-                    String n3 = in.nextLine();
+                    String Ph1 = in.nextLine();
                     System.out.println("Введите Год Рождения");
-                    String n04 = in.nextLine();
-                    int n4 = Integer.parseInt(n04);
-                    AdressList.Dobav(book,n1,n2,n3,n4);
+                    String God01 = in.nextLine();
+                    int God1 = Integer.parseInt(God01);
+                    AdressList.Dobav(book, Ima1, Famil1, Ph1, God1);
                     break;
                 case 2:
                     System.out.println("Введите Имя");
@@ -126,30 +116,32 @@ public class AdressBook {
                     System.out.println("Введите Индекс");
                     String p0 = in.nextLine();
                     int nInd = Integer.parseInt(p0);
-                    int x1=AdressList.Check(book, nInd-1);
-                    if (x1==0) {
+                    boolean x1 = AdressList.Check(book, nInd - 1);
+                    if (!x1) {
                         System.out.println("Совпадений не Найдено");
                     } else {
                         System.out.println("Введите Имя");
-                        String n11 = in.nextLine();
+                        String Ima2 = in.nextLine();
                         System.out.println("Введите Фамилию");
-                        String n22 = in.nextLine();
+                        String Famil2 = in.nextLine();
                         System.out.println("Введите Телефон");
-                        String n33 = in.nextLine();
+                        String Ph2 = in.nextLine();
                         System.out.println("Введите Год Рождения");
-                        String n044 = in.nextLine();
-                        int n44 = Integer.parseInt(n044);
-                        AdressList.Izm(book,nInd-1,n11,n22,n33,n44);}
+                        String God02 = in.nextLine();
+                        int God2 = Integer.parseInt(God02);
+                        AdressList.Izm(book, nInd - 1, Ima2, Famil2, Ph2, God2);
+                    }
                     break;
                 case 4:
                     System.out.println("Введите Индекс");
                     String Del = in.nextLine();
                     int VvodDel = Integer.parseInt(Del);
-                    int x2=AdressList.Check(book, VvodDel-1);
-                    if (x2==0) {
+                    boolean x2 = AdressList.Check(book, VvodDel - 1);
+                    if (!x2) {
                         System.out.println("Совпадений не Найдено");
                     } else {
-                        AdressList.DeleteZap(book, VvodDel-1);}
+                        AdressList.DeleteZap(book, VvodDel - 1);
+                    }
                     break;
                 case 5:
                     AdressList.Vuvod(book);
