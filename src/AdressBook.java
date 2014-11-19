@@ -21,7 +21,9 @@ class Address {
 class AdressList {
 
     private Address[] list = new Address[10];
+    private Address[] Fman = new Address[10];
     private int count = 0;
+    private int seccount=0;
     public static void Dobav(AdressList book, String Ima1, String Famil1, String Ph1, int God1) {
         book.list[book.count] = new Address(Ima1, Famil1, Ph1, God1);
         book.count++;
@@ -36,7 +38,9 @@ class AdressList {
         for (int i = 0; i < book.count; i++) {
             Address a = book.list[i];
             if (a.name.equals(search)) {
-                System.out.println(book.list[i].name + " " + book.list[i].fam + " " + book.list[i].phone + " " + book.list[i].year);
+            book.Fman[x]=book.list[i];
+// System.out.println(book.Fman[i].name + " " + book.Fman[i].fam + " " + book.Fman[i].phone + " " + book.Fman[i].year);
+                book.seccount++;
                 x++;
             }
         }
@@ -73,6 +77,12 @@ class AdressList {
     public static boolean Check(AdressList book, int Chk) {
         return !(Chk < 0 || Chk >= book.count);
     }
+
+    public static void VuvodOne(AdressList book) {
+        for (int i = 0; i < book.seccount; i++) {
+           System.out.println(book.Fman[i].name + " " + book.Fman[i].fam + " " + book.Fman[i].phone + " " + book.Fman[i].year);
+          }
+    }
 }
 
 public class AdressBook {
@@ -84,9 +94,10 @@ public class AdressBook {
             System.out.println("Введите 2 Для Поиска По Имени");
             System.out.println("Введите 3 Для Изменения");
             System.out.println("Введите 4 Для Удаления");
-            System.out.println("Введите 5 Для Вывода Всех Записей");
-            System.out.println("Введите 6 Для Вывода Количества Записей");
-            System.out.println("Введите 7 Для Выхода");
+            System.out.println("Введите 5 Для Вывода Найденных Записей");
+            System.out.println("Введите 6 Для Вывода Всех Записей");
+            System.out.println("Введите 7 Для Вывода Количества Записей");
+            System.out.println("Введите 8 Для Выхода");
 
             Scanner in = new Scanner(System.in);
             String line = in.nextLine();
@@ -144,12 +155,15 @@ public class AdressBook {
                     }
                     break;
                 case 5:
-                    AdressList.Vuvod(book);
+                AdressList.VuvodOne(book);
                     break;
                 case 6:
-                    AdressList.VuvodVse(book);
+                    AdressList.Vuvod(book);
                     break;
                 case 7:
+                    AdressList.VuvodVse(book);
+                    break;
+                case 8:
                     System.exit(0);
                     break;
             }
