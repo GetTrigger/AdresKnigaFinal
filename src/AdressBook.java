@@ -21,9 +21,9 @@ class Address {
 class AdressList {
 
     private Address[] list = new Address[10];
-    private Address[] Fman = new Address[10];
+    //private Address[] Fman = new Address[10];
     private int count = 0;
-    private int seccount=0;
+    //private int seccount=0;
     public static void Dobav(AdressList book, String Ima1, String Famil1, String Ph1, int God1) {
         book.list[book.count] = new Address(Ima1, Famil1, Ph1, God1);
         book.count++;
@@ -33,20 +33,21 @@ class AdressList {
         book.list[nInd] = new Address(Ima1, Famil1, Ph1, God1);
     }
 
-    public static void FindMan(AdressList book, String search) {
+    public static int[] FindMan(AdressList book, String search) {
         int x = 0;
+        int[] result = new int[book.count];
         for (int i = 0; i < book.count; i++) {
             Address a = book.list[i];
             if (a.name.equals(search)) {
-            book.Fman[x]=book.list[i];
-// System.out.println(book.Fman[i].name + " " + book.Fman[i].fam + " " + book.Fman[i].phone + " " + book.Fman[i].year);
-                book.seccount++;
+                result[x]=i;
                 x++;
             }
         }
-        if (x == 0) {
-            System.out.println("Совпадений не Найдено");
+        int [] result2=new int[x];
+        for (int i=0; i<x; i++){
+            result2[i]=result[i];
         }
+        return result2;
     }
 
     public static void Vuvod(AdressList book) {
@@ -54,9 +55,13 @@ class AdressList {
             System.out.println("В Адресной Кониге Нет Записей");
         } else {
             for (int i = 0; i < book.count; i++) {
-                System.out.println(book.list[i].name + " " + book.list[i].fam + " " + book.list[i].phone + " " + book.list[i].year);
+                Vuvod1(book, i);
             }
         }
+    }
+
+    public static void Vuvod1(AdressList book, int index) {
+        System.out.println((index + 1) + " " + book.list[index].name + " " + book.list[index].fam + " " + book.list[index].phone + " " + book.list[index].year);
     }
 
     public static void VuvodVse(AdressList book) {
@@ -78,11 +83,11 @@ class AdressList {
         return !(Chk < 0 || Chk >= book.count);
     }
 
-    public static void VuvodOne(AdressList book) {
+/*    public static void VuvodOne(AdressList book) {
         for (int i = 0; i < book.seccount; i++) {
            System.out.println(book.Fman[i].name + " " + book.Fman[i].fam + " " + book.Fman[i].phone + " " + book.Fman[i].year);
           }
-    }
+    }*/
 }
 
 public class AdressBook {
@@ -121,7 +126,14 @@ public class AdressBook {
                 case 2:
                     System.out.println("Введите Имя");
                     String search = in.nextLine();
-                    AdressList.FindMan(book, search);
+                    int[] found = AdressList.FindMan(book, search);
+                    if (found.length == 0) {
+                        System.out.println("Ничего не найдено");
+                    } else {
+                        for (int i = 0; i < found.length; i++) {
+                            AdressList.Vuvod1(book, found[i]);
+                        }
+                    }
                     break;
                 case 3:
                     System.out.println("Введите Индекс");
@@ -155,7 +167,7 @@ public class AdressBook {
                     }
                     break;
                 case 5:
-                AdressList.VuvodOne(book);
+                //AdressList.VuvodOne(book);
                     break;
                 case 6:
                     AdressList.Vuvod(book);
